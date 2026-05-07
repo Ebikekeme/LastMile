@@ -1,0 +1,187 @@
+### Register Admin
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Admin User",
+  "email": "admin@lastmile.com",
+  "password": "password123",
+  "role": "admin"
+}
+
+### Login
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@lastmile.com",
+  "password": "password123"
+}
+
+### Get Current User
+GET http://localhost:4000/api/auth/me
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Get All Orders
+GET http://localhost:4000/api/orders
+Content-Type: application/json
+
+### Get Order by Tracking Number
+GET http://localhost:4000/api/orders/track/LM-2024-001
+Content-Type: application/json
+
+### Create New Order
+POST http://localhost:4000/api/orders
+Content-Type: application/json
+
+{
+  "customer": {
+    "name": "Test Customer",
+    "phone": "+2348099999999",
+    "email": "test@gmail.com"
+  },
+  "pickup": {
+    "address": "10 Awolowo Road, Ikoyi",
+    "coordinates": { "lat": 6.4531, "lng": 3.4303 }
+  },
+  "dropoff": {
+    "address": "25 Adeola Odeku, Victoria Island",
+    "coordinates": { "lat": 6.4281, "lng": 3.4219 }
+  },
+  "package": {
+    "description": "Documents",
+    "weight": 0.5,
+    "fragile": false
+  }
+}
+
+### Update Order Status
+PATCH http://localhost:4000/api/orders/REPLACE_WITH_ORDER_ID/status
+Content-Type: application/json
+
+{
+  "status": "in-transit",
+  "note": "Rider picked up the package"
+}
+
+### Get All Riders
+GET http://localhost:4000/api/dispatch/riders
+Content-Type: application/json
+
+### Get Available Riders
+GET http://localhost:4000/api/dispatch/riders/available
+Content-Type: application/json
+
+### Get All Trikes
+GET http://localhost:4000/api/dispatch/trikes
+Content-Type: application/json
+
+### Get Available Trikes
+GET http://localhost:4000/api/dispatch/trikes/available
+Content-Type: application/json
+
+### Assign Order to Rider
+POST http://localhost:4000/api/dispatch/assign
+Content-Type: application/json
+
+{
+  "orderId": "REPLACE_WITH_ORDER_ID"
+}
+
+### Update Rider Location
+PATCH http://localhost:4003/api/tracking/69ee01aee87f2b681bd12fed/location
+Content-Type: application/json
+
+{
+  "lat": 6.4541,
+  "lng": 3.3947,
+  "orderId": "69ee01aee87f2b681bd12fed"
+}
+
+### Test Tracking Direct
+PATCH http://localhost:4003/69ea747fa7bc14e764cfaedc/location
+Content-Type: application/json
+
+{
+  "lat": 6.4541,
+  "lng": 3.3947,
+  "orderId": "69ea7480a7bc14e764cfaeed"
+}
+
+
+### Get Rider Live Location
+GET http://localhost:4003/69ea747fa7bc14e764cfaedc/location
+Content-Type: application/json
+
+### Get All Live Locations
+GET http://localhost:4003/live/all
+Content-Type: application/json
+
+### Simulate GPS Movement
+POST http://localhost:4003/69ea747fa7bc14e764cfaedc/simulate
+Content-Type: application/json
+
+{
+  "destination": { "lat": 6.4698, "lng": 3.5852 }
+}
+
+### Get All Notifications
+GET http://localhost:4000/api/notify
+Content-Type: application/json
+
+### Send Order Status Notification
+POST http://localhost:4000/api/notify/order-status
+Content-Type: application/json
+
+{
+  "orderId": "69ea7480a7bc14e764cfaeed",
+  "trackingNumber": "LM-2024-001",
+  "status": "in-transit",
+  "customerName": "Ada Obi",
+  "customerPhone": "+2348066666666",
+  "customerEmail": "ada@gmail.com"
+}
+
+### Send Custom Notification
+POST http://localhost:4000/api/notify/send
+Content-Type: application/json
+
+{
+  "type": "SMS",
+  "recipient": "+2348066666666",
+  "message": "Your trike is 5 minutes away!",
+  "orderId": "69ea7480a7bc14e764cfaeed"
+}
+
+
+### Send Order Status Notification Direct
+POST http://localhost:4004/order-status
+Content-Type: application/json
+
+{
+  "orderId": "69ea7480a7bc14e764cfaeed",
+  "trackingNumber": "LM-2024-001",
+  "status": "in-transit",
+  "customerName": "Ada Obi",
+  "customerPhone": "+2348066666666",
+  "customerEmail": "ada@gmail.com"
+}
+
+### Get All Notifications Direct
+GET http://localhost:4004
+Content-Type: application/json
+
+### Gateway Health
+GET http://localhost:4000/health
+
+### Order Service Health
+GET http://localhost:4001/health
+
+### Dispatch Service Health
+GET http://localhost:4002/health
+
+### Tracking Service Health
+GET http://localhost:4003/health
+
+### Notify Service Health
+GET http://localhost:4004/health

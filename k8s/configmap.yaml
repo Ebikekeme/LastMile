@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lastmile-config
+  namespace: lastmile
+data:
+  MONGO_URI: "mongodb://admin:secret@mongo:27017/lastmile?authSource=admin"
+  REDIS_URL: "redis://redis:6379"
+  ORDER_SERVICE_URL: "http://order-service:4001"
+  DISPATCH_SERVICE_URL: "http://dispatch-service:4002"
+  TRACKING_SERVICE_URL: "http://tracking-service:4003"
+  NOTIFY_SERVICE_URL: "http://notify-service:4004"

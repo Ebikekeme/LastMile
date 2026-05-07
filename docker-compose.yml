@@ -1,0 +1,144 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: lastmile_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: lastmile
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - lastmile_net
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: lastmile_mongo_express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: secret
+      ME_CONFIG_MONGODB_URL: mongodb://admin:secret@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongo
+    networks:
+      - lastmile_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: lastmile_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - lastmile_net
+
+  gateway:
+    build: ./services/gateway
+    container_name: lastmile_gateway
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      JWT_SECRET: supersecretkey
+      MONGO_URI: mongodb://admin:secret@mongo:27017/lastmile?authSource=admin
+      REDIS_URL: redis://redis:6379
+      ORDER_SERVICE_URL: http://order-service:4001
+      DISPATCH_SERVICE_URL: http://dispatch-service:4002
+      TRACKING_SERVICE_URL: http://tracking-service:4003
+      NOTIFY_SERVICE_URL: http://notify-service:4004
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - lastmile_net
+
+  order-service:
+    build: ./services/order-service
+    container_name: lastmile_order_service
+    restart: unless-stopped
+    ports:
+      - "4001:4001"
+    environment:
+      PORT: 4001
+      MONGO_URI: mongodb://admin:secret@mongo:27017/lastmile?authSource=admin
+    depends_on:
+      - mongo
+    networks:
+      - lastmile_net
+
+  dispatch-service:
+    build: ./services/dispatch-service
+    container_name: lastmile_dispatch_service
+    restart: unless-stopped
+    ports:
+      - "4002:4002"
+    environment:
+      PORT: 4002
+      MONGO_URI: mongodb://admin:secret@mongo:27017/lastmile?authSource=admin
+      REDIS_URL: redis://redis:6379
+      ORDER_SERVICE_URL: http://order-service:4001
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - lastmile_net
+
+  tracking-service:
+    build: ./services/tracking-service
+    container_name: lastmile_tracking_service
+    restart: unless-stopped
+    ports:
+      - "4003:4003"
+    environment:
+      PORT: 4003
+      MONGO_URI: mongodb://admin:secret@mongo:27017/lastmile?authSource=admin
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - lastmile_net
+
+  notify-service:
+    build: ./services/notify-service
+    container_name: lastmile_notify_service
+    restart: unless-stopped
+    ports:
+      - "4004:4004"
+    environment:
+      PORT: 4004
+      MONGO_URI: mongodb://admin:secret@mongo:27017/lastmile?authSource=admin
+    depends_on:
+      - mongo
+    networks:
+      - lastmile_net
+
+  frontend:
+    build: ./frontend
+    container_name: lastmile_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:4000
+    depends_on:
+      - gateway
+    networks:
+      - lastmile_net
+
+volumes:
+  mongo_data:
+
+networks:
+  lastmile_net:
+    driver: bridge
