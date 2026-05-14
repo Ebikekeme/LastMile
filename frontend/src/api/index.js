@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: "https://lastmile-0grf.onrender.com",
 });
 
 // Attach token to every request if available
@@ -30,12 +30,13 @@ export const assignOrder = (data) => API.post("/api/dispatch/assign", data);
 export const completeDelivery = (data) => API.post("/api/dispatch/complete", data);
 
 // Tracking
+// Tracking
 export const getRiderLocation = (riderId) =>
-  axios.get(`http://localhost:4003/${riderId}/location`);
+  axios.get(`https://lastmile-tracking-service.onrender.com/${riderId}/location`);
 export const getAllLocations = () =>
-  axios.get("http://localhost:4003/live/all");
+  axios.get("https://lastmile-tracking-service.onrender.com/live/all");
 export const updateLocation = (riderId, data) =>
-  axios.patch(`http://localhost:4003/${riderId}/location`, data);
+  axios.patch(`https://lastmile-tracking-service.onrender.com/${riderId}/location`, data);
 
 // Auth
 export const login = (data) => API.post("/api/auth/login", data);

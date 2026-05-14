@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
   "customer": {
-    "name": "Test Customer",
+    "name": "Victor Dio",
     "phone": "+2348099999999",
     "email": "test@gmail.com"
   },
@@ -89,13 +89,14 @@ Content-Type: application/json
 }
 
 ### Update Rider Location
-PATCH http://localhost:4003/api/tracking/69ee01aee87f2b681bd12fed/location
+PATCH http://localhost:4003/api/tracking/69ee01aee87f2b681bd12ff1/location
 Content-Type: application/json
 
 {
-  "lat": 6.4541,
-  "lng": 3.3947,
-  "orderId": "69ee01aee87f2b681bd12fed"
+  "lat": 6.5244,
+      "lng": 3.3792
+  "orderId": "69ee01aee87f2b681bd12ff1
+  "
 }
 
 ### Test Tracking Direct
@@ -103,14 +104,14 @@ PATCH http://localhost:4003/69ea747fa7bc14e764cfaedc/location
 Content-Type: application/json
 
 {
-  "lat": 6.4541,
-  "lng": 3.3947,
-  "orderId": "69ea7480a7bc14e764cfaeed"
+   "lat": 6.4698,
+      "lng": 3.5852
+  "orderId": "69ee01aee87f2b681bd12fee"
 }
 
 
 ### Get Rider Live Location
-GET http://localhost:4003/69ea747fa7bc14e764cfaedc/location
+GET http://localhost:4003/69ee01aee87f2b681bd12fee/location
 Content-Type: application/json
 
 ### Get All Live Locations
