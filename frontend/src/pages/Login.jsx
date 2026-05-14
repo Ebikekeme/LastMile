@@ -25,14 +25,20 @@ export default function Login({ onLogin }) {
   return (
     <div className="min-h-screen flex" style={{ backgroundColor: "#f7f8fc" }}>
       {/* Left Panel */}
-      <div className="hidden lg:flex w-1/2 flex-col justify-between p-12" style={{ backgroundColor: "#1a3a8f" }}>
+      <div
+        className="hidden lg:flex w-1/2 flex-col justify-between p-12"
+        style={{ backgroundColor: "#1a3a8f" }}
+      >
         <div className="flex items-center gap-3">
-          <div style={{ backgroundColor: "#f0b429" }} className="w-10 h-10 rounded-xl flex items-center justify-center">
+          <div
+            style={{ backgroundColor: "#f0b429" }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+          >
             <span className="text-white font-bold">⚡</span>
           </div>
           <div>
             <h1 className="text-white text-xl font-bold">LastMile</h1>
-            <p className="text-blue-300 text-xs">Logistics Platform</p>
+            <p style={{ color: "#93aee8" }} className="text-xs">Logistics Platform</p>
           </div>
         </div>
 
@@ -41,7 +47,7 @@ export default function Login({ onLogin }) {
             Deliver smarter,<br />
             <span style={{ color: "#f0b429" }}>faster,</span> together.
           </h2>
-          <p className="text-blue-200 text-lg">
+          <p style={{ color: "#bfdbfe" }} className="text-lg">
             Manage your electric cargo trike fleet with real-time tracking and intelligent dispatch.
           </p>
         </div>
@@ -52,9 +58,17 @@ export default function Login({ onLogin }) {
             { label: "Trikes", value: "5" },
             { label: "Zones", value: "5" },
           ].map((stat) => (
-            <div key={stat.label} className="rounded-xl p-4" style={{ backgroundColor: "#122970" }}>
-              <p className="text-2xl font-bold" style={{ color: "#f0b429" }}>{stat.value}</p>
-              <p className="text-blue-300 text-sm">{stat.label}</p>
+            <div
+              key={stat.label}
+              className="rounded-xl p-4"
+              style={{ backgroundColor: "#122970" }}
+            >
+              <p className="text-2xl font-bold" style={{ color: "#f0b429" }}>
+                {stat.value}
+              </p>
+              <p className="text-sm" style={{ color: "#93aee8" }}>
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>
@@ -64,13 +78,20 @@ export default function Login({ onLogin }) {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div style={{ backgroundColor: "#1a3a8f" }} className="w-10 h-10 rounded-xl flex items-center justify-center">
+            <div
+              style={{ backgroundColor: "#1a3a8f" }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+            >
               <span className="text-white font-bold">⚡</span>
             </div>
-            <h1 className="text-xl font-bold" style={{ color: "#1a3a8f" }}>LastMile</h1>
+            <h1 className="text-xl font-bold" style={{ color: "#1a3a8f" }}>
+              LastMile
+            </h1>
           </div>
 
-          <h2 className="text-3xl font-bold mb-2" style={{ color: "#1a3a8f" }}>Welcome back</h2>
+          <h2 className="text-3xl font-bold mb-2" style={{ color: "#1a3a8f" }}>
+            Welcome back
+          </h2>
           <p className="text-gray-500 mb-8">Sign in to your dashboard</p>
 
           {error && (
@@ -81,7 +102,10 @@ export default function Login({ onLogin }) {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: "#1a3a8f" }}>
+              <label
+                className="block text-sm font-medium mb-2"
+                style={{ color: "#1a3a8f" }}
+              >
                 Email address
               </label>
               <input
@@ -89,14 +113,16 @@ export default function Login({ onLogin }) {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent bg-white"
-                style={{ "--tw-ring-color": "#1a3a8f" }}
                 placeholder="admin@lastmile.com"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: "#1a3a8f" }}>
+              <label
+                className="block text-sm font-medium mb-2"
+                style={{ color: "#1a3a8f" }}
+              >
                 Password
               </label>
               <input
